@@ -3,7 +3,7 @@
 Vite、React、Typescript、TailwindCSS開発環境セットアップの手順メモです。
 
 
-## 🚀 Viteでプロジェクト作成。
+## 🚀 Viteでプロジェクト作成
 
 React、Typescriptを選択
 
@@ -45,7 +45,7 @@ export default defineConfig({
 - assets フォルダを削除
 
 
-## 🧰 prettier-plugin-tailwindcss / @trivago/prettier-plugin-sort-imports / vite-plugin-devtools-jsonをインストール
+## 🧰 vite-plugin-devtools-json / prettier-plugin-tailwindcss / @trivago/prettier-plugin-sort-imports をインストール
 
 ```bash
 npm install -D vite-plugin-devtools-json prettier prettier-plugin-tailwindcss @trivago/prettier-plugin-sort-imports
