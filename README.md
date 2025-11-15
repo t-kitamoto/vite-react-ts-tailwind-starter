@@ -1,73 +1,74 @@
-# React + TypeScript + Vite
+# 🛠 vite-react-ts-tailwind-starter
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Vite、React、Typescript、TailwindCSS開発環境セットアップの手順メモです。
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 🚀 Viteでプロジェクト作成。React、Typescriptを選択
+```bash
+npm create vite@latest
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 🎨 Tailwind CSS のインストール
+```bash
+npm install tailwindcss @tailwindcss/vite
 ```
+
+## ⚙️ vite.config.tsの編集
+```ts
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/vite';
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
+});
+```
+
+## 🎨 index.cssの編集
+```css
+@import "tailwindcss";
+```
+- index.css から不要な記述を削除
+- app.css を削除
+- App.tsx を編集（不要な DOM を削除）
+- assets フォルダを削除
+
+## 🧰 prettier-plugin-tailwindcss / @trivago/prettier-plugin-sort-imports / vite-plugin-devtools-jsonをインストール
+```bash
+npm install -D vite-plugin-devtools-json prettier prettier-plugin-tailwindcss @trivago/prettier-plugin-sort-imports
+```
+
+## ⚙️ vite.config.tsにdevtoolsJsonを追記。
+```ts
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/vite';
+import devtoolsJson from 'vite-plugin-devtools-json';
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [react(), tailwindcss(), devtoolsJson()],
+});
+```
+
+## 🧹 .prettierrcを作成
+```json
+{
+  "plugins": [
+    "@trivago/prettier-plugin-sort-imports",
+    "prettier-plugin-tailwindcss"
+  ],
+  "importOrder": ["^react$", "<THIRD_PARTY_MODULES>", "^@/(.*)$", "^[./]"],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true
+}
+```
+
+## 🧪 .vscode/settings.jsonを作成し必要な項目追加。
+```json
+{
+  "css.lint.unknownAtRules": "ignore"
+}
+```
+
+![画面イメージ](https://github.com/t-kitamoto/vite-react-ts-tailwind-starter/blob/main/public/image.png)
